@@ -49,8 +49,6 @@ class Solution {
             answer[i] = value.size();
             i++;
         }
-
-
         return answer;
     }
 }
