@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+*.iml
+.idea/
+.DS_Store
+
 # Log file
 *.log
 
@@ -21,3 +25,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+programmers/challenges/2022-KAKAO-BLIND-RECRUITMENT/1)신고_결과_받기/src/com/company/Main.java
+programmers/challenges/2022-KAKAO-BLIND-RECRUITMENT/2)k진수에서_소수_개수-구하기/src/com/company/Main.java
+programmers/challenges/2022-KAKAO-BLIND-RECRUITMENT/3)주차_요금_계산/src/com/company/Main.java
+programmers/challenges/2022-KAKAO-BLIND-RECRUITMENT/4)양궁대회/src/com/penek/Main.java
