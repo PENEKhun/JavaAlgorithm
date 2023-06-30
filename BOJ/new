@@ -1,0 +1,20 @@
+#!/bin/bash
+
+read -p "백준 문제 번호를 입력해주세요: " number
+directory="./p$number"
+
+mkdir -p "$directory/src"
+# touch "$directory/Main.java" "$directory/p$number.iml" "$directory/.idea/misc.xml"
+
+cat <<EOF > "$directory/src/Main.java"
+public class Main {
+    public static void main(String[] args) {
+
+  }
+}
+
+EOF
+
+echo "스크립트가 성공적으로 실행되었습니다. 꼭 풀어요!@!@!@"
+cd "$directory"
+idea .
