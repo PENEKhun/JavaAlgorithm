@@ -1,20 +1,44 @@
 #!/bin/bash
 
+cd /Volumes/BackupDrive/JavaAlgorithm/BOJ/
 read -p "백준 문제 번호를 입력해주세요: " number
+
+
+html_code=$(curl -s "https://www.acmicpc.net/problem/$number" \
+    -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36')
+
+title=$(echo "$html_code" | grep -o '<span id="problem_title">[^<]*</span>' | sed 's/<[^>]*>//g')
+
+while [ -z "$title" ]; do
+    echo "문제를 찾을 수 없습니다. 올바른 문제 번호를 입력해주세요."
+    read -p "백준 문제 번호를 입력해주세요: " number
+    html_code=$(curl -s "https://www.acmicpc.net/problem/$number" \
+        -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36')
+    title=$(echo "$html_code" | grep -o '<span id="problem_title">[^<]*</span>' | sed 's/<[^>]*>//g')
+done
+
+echo "제목: $title"
 directory="./p$number"
 
 mkdir -p "$directory/src"
-# touch "$directory/Main.java" "$directory/p$number.iml" "$directory/.idea/misc.xml"
 
 cat <<EOF > "$directory/src/Main.java"
+import java.util.Scanner;
+
+/*
+    성훈ㅇㅏ.... 화이팅하자 ....
+    BAEKJOON - $number 번- $title
+    url : https://www.acmicpc.net/problem/$number
+*/
+
 public class Main {
     public static void main(String[] args) {
+      Scanner s = new Scanner(System.in);
 
   }
 }
-
 EOF
 
-echo "스크립트가 성공적으로 실행되었습니다. 꼭 풀어요!@!@!@"
+echo "스크립트가 성공적으로 실행되었습니다. 꼭 푸시길 바랍니당@!@!@!@"
 cd "$directory"
 idea .
