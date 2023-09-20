@@ -42,11 +42,7 @@ public class Main {
         for (int pos = 0; pos < arr.length; pos++) {
             if (value == arr[pos]){
                 int distanceRight = arr.length - pos;
-                int distanceLeft = pos;
-                if (distanceLeft < distanceRight)
-                    return true;
-
-                return false;
+              return pos < distanceRight;
             }
         }
         throw new IllegalArgumentException("Error");
