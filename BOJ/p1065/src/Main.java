@@ -36,11 +36,7 @@ public class Main {
         int cnt = 0;
 
         // 자릿수가 2자리 까지는 한수라고 치자. (1~99)
-        if (n >= 99){
-            cnt += 99;
-        } else {
-            cnt += n;
-        }
+        cnt += Math.min(n, 99);
 
         for (int i = 100; i <= n; i++) {
             if (isSequence(i)) {
