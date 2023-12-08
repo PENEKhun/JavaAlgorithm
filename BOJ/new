@@ -40,5 +40,32 @@ public class Main {
 EOF
 
 echo "스크립트가 성공적으로 실행되었습니다. 꼭 푸시길 바랍니당@!@!@!@"
+
+# .idea 디렉터리 생성
+mkdir -p "$directory/.idea"
+
+# .idea 디렉터리에 saveactions_settings.xml 파일 생성
+cat <<EOF > "$directory/.idea/saveactions_settings.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SaveActionSettings">
+    <option name="actions">
+      <set>
+        <option value="activate" />
+        <option value="activateOnShortcut" />
+        <option value="activateOnBatch" />
+        <option value="organizeImports" />
+        <option value="reformat" />
+        <option value="unqualifiedFieldAccess" />
+        <option value="unqualifiedMethodAccess" />
+        <option value="unnecessarySemicolon" />
+      </set>
+    </option>
+    <option name="configurationPath" value="" />
+  </component>
+</project>
+EOF
+
+
 cd "$directory"
 idea .
