@@ -40,12 +40,11 @@ public class Main {
 EOF
 
 echo "스크립트가 성공적으로 실행되었습니다. 꼭 푸시길 바랍니당@!@!@!@"
-
-# .idea 디렉터리 생성
-mkdir -p "$directory/.idea"
+cd "$directory"
+idea . & sleep 40 &&
 
 # .idea 디렉터리에 saveactions_settings.xml 파일 생성
-cat <<EOF > "$directory/.idea/saveactions_settings.xml"
+cat <<EOF > ".idea/saveactions_settings.xml"
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SaveActionSettings">
@@ -65,7 +64,3 @@ cat <<EOF > "$directory/.idea/saveactions_settings.xml"
   </component>
 </project>
 EOF
-
-
-cd "$directory"
-idea .
