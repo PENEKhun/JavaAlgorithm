@@ -27,19 +27,29 @@ public class Main {
           Arrays.stream(arrInput.split(",")).mapToInt(Integer::parseInt).toArray();
 
       boolean isError = false;
+      boolean flip = false;
+
+      int startIdx = 0;
+      int endIdx = arr.length;
+
       for (char c : command.toCharArray()) {
         if (c == 'R') {
-          int[] newArr = new int[n];
-          for (int i1 = arr.length - 1; i1 >= 0; i1--) {
-            newArr[n - i1 - 1] = arr[i1];
-          }
-          arr = newArr;
+          flip = !flip;
         } else if (c == 'D') {
           if (arr.length < 1) {
             isError = true;
             break;
           }
-          arr = Arrays.copyOfRange(arr, 1, arr.length);
+          if (flip) {
+            endIdx--;
+          } else {
+            startIdx++;
+          }
+
+          if (endIdx < startIdx) {
+            isError = true;
+            break;
+          }
         } else {
           isError = true;
           break;
@@ -49,7 +59,15 @@ public class Main {
       if (isError) {
         bw.write("error\n");
       } else {
-        bw.write(Arrays.toString(arr).replaceAll(" ", "") + "\n");
+        arr = Arrays.copyOfRange(arr, startIdx, endIdx);
+        if (flip) {
+          int[] newArr = new int[arr.length];
+          for (int index = 0; index < arr.length; index++) {
+            newArr[index] = arr[arr.length - index - 1];
+          }
+          arr = newArr;
+        }
+        bw.write(Arrays.toString(arr).replace(" ", "") + "\n");
       }
     }
     bw.flush();
