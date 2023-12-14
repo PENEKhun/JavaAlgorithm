@@ -3,60 +3,48 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-
-/*
-    성훈ㅇㅏ.... 화이팅하자 ....
-    solved BAEKJOON #2178 미로 탐색
-    url : https://www.acmicpc.net/problem/2178
-*/
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
-  // int[][] visited
-  static ArrayList<Integer> result = new ArrayList<>();
   static int[][] maze;
   static int colSize;
   static int rowSize;
   static int[] rowSet = new int[]{0, 0, -1, 1}; // 상하좌우
   static int[] colSet = new int[]{1, -1, 0, 0}; // 상하좌우
 
-  public static void lego(int col, int row, int[][] visited) {
-    if (col == colSize - 1 && row == rowSize - 1) {
-      result.add(visited.length);
-      return;
-    }
+  public static int bfs() {
+    Queue<int[]> queue = new LinkedList<>();
+    boolean[][] visited = new boolean[colSize][rowSize];
 
-    for (int i = 0; i < 4; i++) {
-      int newRow = row + rowSet[i];
-      int newCol = col + colSet[i];
-      if (newCol < 0 || newRow < 0) {
-        continue;
+    queue.offer(new int[]{0, 0, 1});
+    visited[0][0] = true;
+
+    while (!queue.isEmpty()) {
+      int[] current = queue.poll();
+      int col = current[0];
+      int row = current[1];
+      int distance = current[2];
+
+      if (col == colSize - 1 && row == rowSize - 1) {
+        return distance;
       }
 
-      if (newCol >= colSize || newRow >= rowSize) {
-        continue;
-      }
+      for (int i = 0; i < 4; i++) {
+        int newCol = col + colSet[i];
+        int newRow = row + rowSet[i];
 
-      if (maze[newCol][newRow] == 1) {
-        boolean isVisited = false;
-        int[][] newVisited = new int[visited.length + 1][2];
-        int[] nextPoint = new int[]{newCol, newRow};
-        for (int i1 = 1; i1 < visited.length; i1++) {
-          if (visited[i1][0] == nextPoint[0] && visited[i1][1] == nextPoint[1]) {
-            isVisited = true;
-            break;
-          }
-          newVisited[i1] = visited[i1]; // copy
-        }
-
-        if (!isVisited) {
-          newVisited[visited.length] = nextPoint;
-          lego(newCol, newRow, newVisited);
+        if (newCol >= 0 && newRow >= 0 && newCol < colSize && newRow < rowSize
+            && maze[newCol][newRow] == 1 && !visited[newCol][newRow]) {
+          queue.offer(new int[]{newCol, newRow, distance + 1});
+          visited[newCol][newRow] = true;
         }
       }
     }
+
+    return -1;
   }
 
   public static void main(String[] args) throws IOException {
@@ -72,11 +60,9 @@ public class Main {
       maze[i] = Arrays.stream(br.readLine().split("")).mapToInt(Integer::parseInt).toArray();
     }
 
-    int[][] visited = new int[1][2];
-    lego(0, 0, visited);
+    int result = bfs();
 
-    int min = (int) result.stream().sorted().toArray()[0];
-    bw.write(min + "\n");
+    bw.write(result + "\n");
     bw.flush();
   }
 }
