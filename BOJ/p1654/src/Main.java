@@ -1,43 +1,49 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Scanner;
 
 /*
-    성훈ㅇㅏ.... 화이팅하자 ....
-    solved BAEKJOON #1654 랜선 자르기
-    url : https://www.acmicpc.net/problem/1654
+    BAEKJOON #1654 랜선 자르기
+    https://www.acmicpc.net/problem/1654
 */
 
 public class Main {
 
-  public static void main(String[] args) {
-    Scanner s = new Scanner(System.in);
-    int have = s.nextInt(); // 이미 가지고 있는 랜선 수
-    int need = s.nextInt(); // 필요한 랜선 수 (이걸 넘겨도 됨)
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    int[] length = new int[have];
-    for (int i = 0; i < have; i++) {
-      length[i] = s.nextInt();
+    int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+    int K = input[0];
+    int N = input[1];
+    long max = -1;
+    int[] item = new int[K];
+    for (int i = 0; i < K; i++) {
+      int length = Integer.parseInt(br.readLine());
+      item[i] = length;
+      if (max < length) {
+        max = length;
+      }
     }
-    
-    int high = Arrays.stream(length).max().getAsInt() + 1;
-    int low = 0;
-    int mid;
 
-    while (low <= high) {
-      mid = ((high + low) / 2);
+    long min = 1;
+    long mid = 0;
 
-      long canMake = 0;
-      for (int item : length) {
-        canMake += item / mid;
+    while (min <= max) {
+      mid = (min + max) / 2;
+
+      long count = 0;
+      for (long len : item) {
+        count += len / mid;
       }
 
-      if (canMake < need) {
-        high = mid - 1;
+      if (count < N) {
+        max = mid - 1;
       } else {
-        low = mid + 1;
+        min = mid + 1;
       }
     }
 
-    System.out.println(low - 1);
+    System.out.println(max);
   }
 }
