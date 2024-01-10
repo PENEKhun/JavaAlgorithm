@@ -20,17 +20,17 @@ public class Main {
 
     int[][] square = new int[size + 1][size + 1];
     long[][] calculated = new long[size + 1][size + 1];
-    for (int y = 1; y <= size; y++) {
+    for (int i = 1; i <= size; i++) {
       StringTokenizer st = new StringTokenizer(br.readLine());
-      for (int x = 1; x <= size; x++) {
-        square[y][x] = Integer.parseInt(st.nextToken());
+      for (int j = 1; j <= size; j++) {
+        square[i][j] = Integer.parseInt(st.nextToken());
       }
     }
 
-    for (int y = 1; y <= size; y++) {
-      for (int x = 1; x <= size; x++) {
-        calculated[y][x] =
-            calculated[y - 1][x] + calculated[y][x - 1] - calculated[y - 1][x - 1] + square[y][x];
+    for (int i = 1; i <= size; i++) {
+      for (int j = 1; j <= size; j++) {
+        calculated[i][j] =
+            calculated[i - 1][j] + calculated[i][j - 1] - calculated[i - 1][j - 1] + square[i][j];
       }
     }
 
@@ -42,10 +42,10 @@ public class Main {
 
       int x2 = Integer.parseInt(calcPoint[2]);
       int y2 = Integer.parseInt(calcPoint[3]);
-      
+
       long result =
-          calculated[y2][x2] - calculated[y2][x1 - 1] - calculated[y1 - 1][x2]
-              + calculated[y1 - 1][x2 - 1];
+          calculated[x2][y2] - calculated[x2][y1 - 1] - calculated[x1 - 1][y2] + calculated[x1 - 1][
+              y1 - 1];
       bw.write(result + "\n");
     }
     bw.flush();
