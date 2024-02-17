@@ -1,57 +1,73 @@
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를
- * 사용하여 생성되었습니다.
+ * 이 테스트코드는 <a href="https://github.com/PENEKhun/Baekjoon-java-starter">Baekjoon-java-starter </a>를 사용하여
+ * 생성되었습니다.
  *
  * @Author : PENEKhun
  */
 public class TestHelper {
 
-  public static void main(String[] args) {
-    TestCase[] testCases = new TestCase[]{
+  private static final HashMap<Field, Object> initialStates = new HashMap<>();
+
+  public static void main(String[] args) throws IllegalAccessException {
+    captureInitialState();
+
+    TestCase[] testCases = new TestCase[] {
         new TestCase(
 // input
-"""
-3 1
-""",
+            """
+                3 1
+                """,
 // output
-"""
-1
-2
-3
-"""),
-new TestCase(
+            """
+                1
+                2
+                3
+                """),
+        new TestCase(
 // input
-"""
-4 2
-""",
+            """
+                4 2
+                """,
 // output
-"""
-1 2
-1 3
-1 4
-2 3
-2 4
-3 4
-"""),
-new TestCase(
+            """
+                1 2
+                1 3
+                1 4
+                2 3
+                2 4
+                3 4
+                """),
+        new TestCase(
 // input
-"""
-4 4
-""",
+            """
+                4 4
+                """,
 // output
-"""
-1 2 3 4
-"""),
+            """
+                1 2 3 4
+                """),
 
     };
+
+    /*
+    Step 1.
+    리플랙션으로 Main 클래스의 초기값을 모두 저장합니다.
+     */
 
     int passedCases = 0;
 
     for (int i = 0; i < testCases.length; i++) {
+      resetToInitialState();
+
       TestCase testCase = testCases[i];
 
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -60,6 +76,10 @@ new TestCase(
       System.setOut(printStream);
       System.setIn(new ByteArrayInputStream(testCase.input.getBytes()));
 
+      /*
+      Step 2.
+      Step1에서 저장된 Main 클래스의 초기값으로 Main을 초기화 한 후 , 테스트 케이스를 실행합니다.
+       */
       try {
         Main.main(new String[0]);
       } catch (Exception e) {
@@ -85,6 +105,42 @@ new TestCase(
     System.out.println("테스트 완료 (" + passedCases + " / " + testCases.length + ")");
     if (passedCases == testCases.length) {
       System.out.println("주어진 케이스에 대해 잘 동작하고 있습니다.");
+    }
+  }
+
+  private static void captureInitialState() {
+    try {
+      Class<?> clazz = Main.class;
+      Field[] fields = clazz.getDeclaredFields();
+      for (Field field : fields) {
+        if (Modifier.isStatic(field.getModifiers())) {
+          field.setAccessible(true);
+          initialStates.put(field, field.get(null));
+        }
+      }
+    } catch (Exception e) {
+      System.out.println(red("Main 클래스에 접근할 수 없습니다."));
+    }
+  }
+
+  private static void resetToInitialState() {
+    try {
+      for (Map.Entry<Field, Object> entry : initialStates.entrySet()) {
+        Field field = entry.getKey();
+        field.setAccessible(true);
+        Object value = entry.getValue();
+        if (value instanceof Collection) {
+          ((Collection<?>) value).clear();
+        } else if (value instanceof Map) {
+          ((Map<?, ?>) value).clear();
+        } else if (value instanceof StringBuilder) {
+          ((StringBuilder) value).setLength(0);
+        } else {
+          field.set(null, value);
+        }
+      }
+    } catch (IllegalAccessException e) {
+      System.out.println(red("Main 클래스에 접근할 수 없습니다."));
     }
   }
 
