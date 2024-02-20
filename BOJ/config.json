@@ -1,14 +1,1 @@
-{
-  "srcDirPrefix": {
-    "value": "p"
-  },
-  "mainCodeTemplate": {
-    "value": "import java.io.BufferedReader;\nimport java.io.BufferedWriter;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.io.OutputStreamWriter;\n\n/*\n  BAEKJOON {{number}} {{title}}\n  https://www.acmicpc.net/problem/{{number}}\n*/\n\npublic class Main {\n\n  public static void main(String[] args) throws IOException {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));\n    // 코드를 작성하세요.\n\n    bw.flush();\n    bw.close();\n    br.close();\n  }\n}"
-  },
-  "markdownTemplate": {
-    "value": "# {{title}}\n\n> 문제 번호 : {{number}}  \n> 출처 : {{url}}\n\n## 문제 설명\n\n{{description}}\n\n"
-  },
-  "enableReadme": {
-    "value": "true"
-  }
-}
+{"srcDirPrefix":{"value":"p"},"mainCodeTemplate":{"value":"import java.io.BufferedReader;\nimport java.io.BufferedWriter;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.io.OutputStreamWriter;\n\n/*\n  BAEKJOON {{number}} {{title}}\n  https://www.acmicpc.net/problem/{{number}}\n*/\n\npublic class Main {\n\n  public static void main(String[] args) throws IOException {\n    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));\n    // 코드를 작성하세요.\n\n    bw.flush();\n    bw.close();\n    br.close();\n  }\n}"},"markdownTemplate":{"value":"# {{title}}\n\n> 문제 번호 : {{number}}  \n> 출처 : {{url}}\n\n## 문제 설명\n\n{{description}}\n\n"},"enableReadme":{"value":"true"}}
