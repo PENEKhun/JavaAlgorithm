@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 /*
   BAEKJOON 12865 평범한 배낭
@@ -43,22 +40,21 @@ public class Main {
       items[i] = new Item(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
     }
 
-    items = Arrays.stream(items).sorted(Comparator.comparingInt(o -> o.weight)).toArray(Item[]::new);
-    System.out.println(Arrays.toString(items));
-    ArrayList<Item> bag = new ArrayList<>();
-    int[] dp = new int[maxKg + 1];
-    for (Item item : items) {
-      System.out.println(Arrays.toString(dp));
-      bag.add(item);
-
-      for (int kg = 1; kg <= maxKg; kg++) {
-//        if (kg >= item.weight) {
-//          dp[kg] = Math.max(dp[kg - 1], bag.getLast().worthy);
-//        }
+    int[][] dp = new int[n + 1][maxKg + 1];
+    for (int i = 1; i <= n; i++) {
+      for (int w = 1; w <= maxKg; w++) {
+        Item item = items[i - 1];
+        if (item.weight > w) {
+          dp[i][w] = dp[i - 1][w];
+        } else {
+          dp[i][w] = Math.max(
+              dp[i - 1][w - item.weight] + item.worthy,
+              dp[i - 1][w]
+          );
+        }
       }
     }
 
-    System.out.println(Arrays.toString(dp));
-    System.out.println(dp[maxKg - 1]);
+    System.out.println(dp[n][maxKg]);
   }
 }
