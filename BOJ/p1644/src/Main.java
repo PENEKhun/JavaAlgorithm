@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
   BAEKJOON 1644 소수의 연속합
@@ -16,15 +17,12 @@ public class Main {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
     ArrayList<Integer> primeDict = new ArrayList<>();
-    Boolean[] isPrime = new Boolean[n + 1];
-    isPrime[1] = false;
+    boolean[] isPrime = new boolean[n + 1];
+    Arrays.fill(isPrime, true);
 
-    for (int i = 2; i <= n; i++) {
-      if (isPrime[i] == null) {
-        isPrime[i] = true;
-        for (int k = i * 2; k <= n; k += i) {
-          isPrime[k] = false;
-        }
+    for (int i = 2; i <= Math.sqrt(n); i++) {
+      for (int k = i * 2; k <= n; k += i) {
+        isPrime[k] = false;
       }
     }
 
@@ -33,7 +31,6 @@ public class Main {
         primeDict.add(i);
       }
     }
-
 
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     if (n == 1) {
