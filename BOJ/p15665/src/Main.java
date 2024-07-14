@@ -15,16 +15,17 @@ public class Main {
   static int[] numbers;
   static StringBuilder sb = new StringBuilder();
 
-  static void dfs(int idx, int depth, StringBuilder memo) {
-    memo.append(numbers[idx]).append(" ");
-
+  static void dfs(int depth, StringBuilder memo) {
     if (depth == m) {
       sb.append(memo).append("\n");
       return;
     }
 
-    for (int i = 0; i < numbers.length; i++) {
-      dfs(i, depth + 1, new StringBuilder(memo));
+    for (int number : numbers) {
+      int mem = memo.length();
+      memo.append(number).append(" ");
+      dfs(depth + 1, memo);
+      memo.setLength(mem);
     }
   }
 
@@ -37,9 +38,7 @@ public class Main {
     numbers = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).distinct().toArray();
     Arrays.sort(numbers);
 
-    for (int i = 0; i < numbers.length; i++) {
-      dfs(i, 1, new StringBuilder());
-    }
+    dfs(0, new StringBuilder());
 
     bw.write(String.valueOf(sb));
     bw.flush();
