@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /*
   BAEKJOON 1158 요세푸스 문제
@@ -16,39 +18,26 @@ public class Main {
     int N = Integer.parseInt(input[0]);
     int K = Integer.parseInt(input[1]);
 
-    int[] people = new int[N];
-    for (int i = 0; i < N; i++) {
-      people[i] = i + 1;
+    List<Integer> people = new ArrayList<>();
+    StringBuilder sb = new StringBuilder("<");
+    for (int i = 1; i <= N; i++) {
+      people.add(i);
     }
 
-    String[] result = new String[N];
-
-    int killed = 0;
-    int idx = 0;
-    int cnt = 1;
-    while (killed != N) {
-      if (idx >= N) {
-        idx %= N;
+    int idx = K - 1;
+    while (!people.isEmpty()) {
+      if (idx >= people.size()) {
+        idx %= people.size();
       }
-
-      if (people[idx] == 0) {
-        idx++;
-      } else {
-        if (cnt != K) {
-          cnt++;
-          idx++;
-          continue;
-        }
-
-        result[killed] = String.valueOf(people[idx]);
-        people[idx] = 0;
-        cnt = 1;
-        killed++;
+      sb.append(people.get(idx));
+      people.remove(idx);
+      if (!people.isEmpty()) {
+        sb.append(", ");
       }
+      idx += K - 1;
     }
+    sb.append(">");
 
-    System.out.println(
-        "<" + Arrays.stream(result).reduce((a, b) -> a + ", " + b).get() + ">"
-    );
+    System.out.println(sb);
   }
 }
