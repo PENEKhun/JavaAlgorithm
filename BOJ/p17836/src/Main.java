@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -36,7 +36,7 @@ public class Main {
 
   public static int bfs(int startX, int startY, int destX, int destY) {
 
-    Queue<Status> q = new LinkedList<>();
+    Queue<Status> q = new ArrayDeque<>();
     q.add(new Status(startX, startY, false, 0));
 
     int result = Integer.MAX_VALUE;
